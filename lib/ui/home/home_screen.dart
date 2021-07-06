@@ -1,4 +1,5 @@
 import 'package:alia_movie/bloc/bloc.dart';
+import 'package:alia_movie/ui/detail/detail_screen.dart';
 import 'package:alia_movie/utils/assets/font_utils.dart';
 import 'package:alia_movie/utils/assets/image_utils.dart';
 import 'package:alia_movie/widgets/widget.dart';
@@ -104,32 +105,36 @@ class __HomeContainerState extends State<_HomeContainer> {
                       return Container();
                     }),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      BlocBuilder<GetMovieHeaderBloc, GetMovieHeaderState>(
-                        builder: (context, state) {
-                          if (state is GetMovieHeaderSuccessState) {
-                            return IconTextColumn(
+                  BlocBuilder<GetMovieHeaderBloc, GetMovieHeaderState>(
+                    builder: (context, state) {
+                      if (state is GetMovieHeaderSuccessState) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            IconTextColumn(
+                              icon: Icon(Icons.play_arrow_outlined,
+                                  color: Colors.white),
+                              label: 'Play',
+                              onPress: () {},
+                            ),
+                            IconTextColumn(
                               icon: Icon(Icons.info_outlined,
                                   color: Colors.white),
-                              label: 'Info',
+                              label: 'Detail',
                               onPress: () {
-                                showInfoBottomSheet(
+                                Navigator.pushNamed(
                                   context,
-                                  movie: state.movie,
-                                  onAddCallback: () {},
-                                  onPlayCallback: () {},
-                                  onDetailCallback: () {},
+                                  DetailScreen.ROUTE,
+                                  arguments: state.movie,
                                 );
                               },
-                            );
-                          }
-                          return Container();
-                        },
-                      ),
-                    ],
-                  )
+                            )
+                          ],
+                        );
+                      }
+                      return Container();
+                    },
+                  ),
                 ],
               )
             ],
@@ -179,9 +184,16 @@ class __HomeContainerState extends State<_HomeContainer> {
                                 movie: movies[position],
                                 isFirst: isFirst,
                                 isLast: isLast,
-                                onAddCallback: () {},
-                                onPlayCallback: () {},
-                                onDetailCallback: () {},
+                                onPlayCallback: () {
+                                  print("onPlay");
+                                },
+                                onDetailCallback: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    DetailScreen.ROUTE,
+                                    arguments: movies[position],
+                                  );
+                                },
                               );
                       },
                     ),
