@@ -2,6 +2,7 @@ import 'package:alia_movie/bloc/bloc.dart';
 import 'package:alia_movie/ui/detail/detail_screen.dart';
 import 'package:alia_movie/utils/assets/font_utils.dart';
 import 'package:alia_movie/utils/assets/image_utils.dart';
+import 'package:alia_movie/widgets/snackbar.dart';
 import 'package:alia_movie/widgets/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -115,7 +116,10 @@ class __HomeContainerState extends State<_HomeContainer> {
                               icon: Icon(Icons.play_arrow_outlined,
                                   color: Colors.white),
                               label: 'Play',
-                              onPress: () {},
+                              onPress: () {
+                                showSnackBar(context,
+                                    message: 'Please Subscribe to AliaMovie');
+                              },
                             ),
                             IconTextColumn(
                               icon: Icon(Icons.info_outlined,
@@ -185,7 +189,8 @@ class __HomeContainerState extends State<_HomeContainer> {
                                 isFirst: isFirst,
                                 isLast: isLast,
                                 onPlayCallback: () {
-                                  print("onPlay");
+                                  showSnackBar(context,
+                                      message: 'Please Subscribe to AliaMovie');
                                 },
                                 onDetailCallback: () {
                                   Navigator.pushNamed(
@@ -242,8 +247,4 @@ class _HomeHeader extends StatelessWidget {
       ),
     );
   }
-}
-
-void showSnackBar(BuildContext context, {required String message}) {
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
 }
