@@ -107,37 +107,21 @@ class __HomeContainerState extends State<_HomeContainer> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      IconTextColumn(
-                        icon: Icon(Icons.add, color: Colors.white),
-                        label: 'Add',
-                        onPress: () {
-                          showSnackBar(context,
-                              message: 'Success Added to Your List');
-                        },
-                      ),
-                      IconedCircularButton(
-                        icon: Icon(Icons.play_arrow),
-                        label: 'Play',
-                        onPressed: () {
-                          showSnackBar(context,
-                              message: 'Please Subscribe to Play Movie');
-                        },
-                      ),
-                      BlocBuilder<GetMovieHighlightListBloc,
-                          GetMovieHighlightListState>(
+                      BlocBuilder<GetMovieHeaderBloc, GetMovieHeaderState>(
                         builder: (context, state) {
-                          if (state is GetMovieHighlightListUpdateListState) {
+                          if (state is GetMovieHeaderSuccessState) {
                             return IconTextColumn(
                               icon: Icon(Icons.info_outlined,
                                   color: Colors.white),
                               label: 'Info',
                               onPress: () {
-                                if (state.movies.length > 0)
-                                  showInfoBottomSheet(context,
-                                      movie: state.movies[0]);
-                                else
-                                  showSnackBar(context,
-                                      message: 'Offline Mode');
+                                showInfoBottomSheet(
+                                  context,
+                                  movie: state.movie,
+                                  onAddCallback: () {},
+                                  onPlayCallback: () {},
+                                  onDetailCallback: () {},
+                                );
                               },
                             );
                           }
@@ -195,6 +179,9 @@ class __HomeContainerState extends State<_HomeContainer> {
                                 movie: movies[position],
                                 isFirst: isFirst,
                                 isLast: isLast,
+                                onAddCallback: () {},
+                                onPlayCallback: () {},
+                                onDetailCallback: () {},
                               );
                       },
                     ),
