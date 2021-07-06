@@ -5,7 +5,7 @@ import 'package:alia_movie/data/network/helper/api_helper_impl.dart';
 class NetworkRepository {
   ApiHelperImpl _apiHelper = ApiHelperImpl();
 
-  Future<Base<List<Movie>>> searchMovie(String title, int page) async {
+  Future<Base<List<Movie>>> getMovies(String title, int page) async {
     var response = await _apiHelper.get(
       ApiRoutes.SEARCH_MOVIE,
       queryParameters: {
@@ -16,6 +16,13 @@ class NetworkRepository {
 
     var result = Base<List<Movie>>.fromJson(response.data,
         (json) => (json as List).map((e) => Movie.fromJson(e)).toList());
+    return result;
+  }
+
+  Future<Movie> getMovieHeader() async {
+    var response = await _apiHelper.get(ApiRoutes.MOVIE_HEADER);
+
+    var result = Movie.fromJson(response.data);
     return result;
   }
 }

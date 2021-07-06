@@ -8,18 +8,18 @@ class Movie {
   late String title;
 
   @JsonKey(name: 'poster_path')
-  late String imagePath;
+  late String? imagePath;
 
   @JsonKey(name: 'release_date')
-  late String releaseDate;
+  late String? releaseDate;
 
-  late String overview;
+  late String? overview;
 
   Movie({
     required this.id,
-    required this.imagePath,
-    required this.releaseDate,
-    required this.overview,
+    this.imagePath,
+    this.releaseDate,
+    this.overview,
   });
 
   factory Movie.fromJson(Map<String, dynamic> json) => _$MovieFromJson(json);
