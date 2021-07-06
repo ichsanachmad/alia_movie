@@ -164,7 +164,7 @@ class __HomeContainerState extends State<_HomeContainer> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 6),
+                    margin: EdgeInsets.only(top: 6, bottom: 10),
                     height: 130,
                     child: ListView.builder(
                       controller: _movieScrollController,
@@ -189,6 +189,7 @@ class __HomeContainerState extends State<_HomeContainer> {
                                 isFirst: isFirst,
                                 isLast: isLast,
                                 onPlayCallback: () {
+                                  Navigator.pop(context);
                                   showSnackBar(context,
                                       message: 'Please Subscribe to AliaMovie');
                                 },

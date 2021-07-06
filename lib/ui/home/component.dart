@@ -3,6 +3,7 @@ import 'package:alia_movie/utils/assets/font_utils.dart';
 import 'package:alia_movie/utils/assets/image_utils.dart';
 import 'package:alia_movie/utils/colors/color_hex.dart';
 import 'package:alia_movie/utils/colors/color_utils.dart';
+import 'package:alia_movie/utils/date/custom_date.dart';
 import 'package:alia_movie/widgets/widget.dart';
 import 'package:flutter/material.dart';
 
@@ -123,6 +124,18 @@ class MiniDetailBottomSheet extends StatelessWidget {
                               color: Colors.white,
                               fontSize: 23,
                               fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 8, right: 16),
+                          child: Text(
+                            'Release: ${CustomDate.stringDateFromString(movie.releaseDate)}',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              fontFamily: FontUtils.POPPINS,
+                              color: Colors.white,
+                              fontSize: 12,
                             ),
                           ),
                         ),
