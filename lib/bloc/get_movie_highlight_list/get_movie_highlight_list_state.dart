@@ -6,6 +6,8 @@ class GetMovieHighlightListState extends Equatable {
   List<Object?> get props => [];
 }
 
+class GetMovieHighlightListInitState extends GetMovieHighlightListState {}
+
 class GetMovieHighlightListLoadingState extends GetMovieHighlightListState {}
 
 class GetMovieHighlightListUpdateListState extends GetMovieHighlightListState {

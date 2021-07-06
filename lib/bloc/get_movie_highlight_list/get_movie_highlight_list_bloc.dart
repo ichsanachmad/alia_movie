@@ -5,11 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GetMovieHighlightListBloc
     extends Bloc<GetMovieHighlightListEvent, GetMovieHighlightListState> {
-  GetMovieHighlightListBloc() : super(GetMovieHighlightListState());
   MovieDomain _movieDomain = MovieDomain();
 
   static const QUERY = 'Money';
   var _page = 1;
+
+  GetMovieHighlightListBloc() : super(GetMovieHighlightListInitState());
 
   @override
   Stream<GetMovieHighlightListState> mapEventToState(
@@ -21,7 +22,7 @@ class GetMovieHighlightListBloc
 
   Stream<GetMovieHighlightListState> _mapMovieHighlightToState() async* {
     try {
-      if (state is GetMovieHighlightListState) {
+      if (state is GetMovieHighlightListInitState) {
         final data = await _movieDomain.getMovies(QUERY, _page);
         yield GetMovieHighlightListUpdateListState(
             movies: data.results, hasReachedMax: false);
