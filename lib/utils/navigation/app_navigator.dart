@@ -1,3 +1,4 @@
+import 'package:alia_movie/data/model/movie/movie.dart';
 import 'package:alia_movie/ui/ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,10 @@ class AppNavigator {
         break;
       case SplashScreen.ROUTE:
         _builder = (context) => SplashScreen();
+        break;
+      case DetailScreen.ROUTE:
+        Movie? movie = settings.arguments as Movie?;
+        _builder = (context) => DetailScreen(movie: movie);
         break;
       default:
         throw 'Illegal Routes ${settings.name}';

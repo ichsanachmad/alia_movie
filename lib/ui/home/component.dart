@@ -3,6 +3,7 @@ import 'package:alia_movie/utils/assets/font_utils.dart';
 import 'package:alia_movie/utils/assets/image_utils.dart';
 import 'package:alia_movie/utils/colors/color_hex.dart';
 import 'package:alia_movie/utils/colors/color_utils.dart';
+import 'package:alia_movie/utils/date/custom_date.dart';
 import 'package:alia_movie/widgets/widget.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +11,6 @@ class MovieHomeListItem extends StatelessWidget {
   final Movie movie;
   final bool isFirst;
   final bool isLast;
-  final VoidCallback onAddCallback;
   final VoidCallback onPlayCallback;
   final VoidCallback onDetailCallback;
 
@@ -18,7 +18,6 @@ class MovieHomeListItem extends StatelessWidget {
     required this.movie,
     required this.isFirst,
     required this.isLast,
-    required this.onAddCallback,
     required this.onPlayCallback,
     required this.onDetailCallback,
   });
@@ -42,7 +41,6 @@ class MovieHomeListItem extends StatelessWidget {
           showInfoBottomSheet(
             context,
             movie: movie,
-            onAddCallback: onAddCallback,
             onPlayCallback: onPlayCallback,
             onDetailCallback: onDetailCallback,
           );
@@ -54,13 +52,11 @@ class MovieHomeListItem extends StatelessWidget {
 
 class MiniDetailBottomSheet extends StatelessWidget {
   final Movie movie;
-  final VoidCallback onAddCallback;
   final VoidCallback onPlayCallback;
   final VoidCallback onDetailCallback;
 
   MiniDetailBottomSheet({
     required this.movie,
-    required this.onAddCallback,
     required this.onPlayCallback,
     required this.onDetailCallback,
   });
@@ -132,6 +128,18 @@ class MiniDetailBottomSheet extends StatelessWidget {
                           ),
                         ),
                         Container(
+                          margin: EdgeInsets.only(left: 8, right: 16),
+                          child: Text(
+                            'Release: ${CustomDate.stringDateFromString(movie.releaseDate)}',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              fontFamily: FontUtils.POPPINS,
+                              color: Colors.white,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                        Container(
                           margin: EdgeInsets.only(left: 8, top: 8),
                           child: Text(
                             movie.overview ?? '',
@@ -155,23 +163,15 @@ class MiniDetailBottomSheet extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     IconTextColumn(
-                      icon: Icon(Icons.add, color: Colors.white),
-                      label: 'Add',
-                      onPress: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    IconedCircularButton(
-                      icon: Icon(Icons.play_arrow),
+                      icon:
+                          Icon(Icons.play_arrow_outlined, color: Colors.white),
                       label: 'Play',
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
+                      onPress: onPlayCallback,
                     ),
                     IconTextColumn(
                       icon: Icon(Icons.info_outlined, color: Colors.white),
                       label: 'Detail',
-                      onPress: () {},
+                      onPress: onDetailCallback,
                     )
                   ],
                 ),
@@ -187,7 +187,6 @@ class MiniDetailBottomSheet extends StatelessWidget {
 void showInfoBottomSheet(
   BuildContext context, {
   required Movie movie,
-  required VoidCallback onAddCallback,
   required VoidCallback onPlayCallback,
   required VoidCallback onDetailCallback,
 }) {
@@ -198,7 +197,6 @@ void showInfoBottomSheet(
     builder: (context) {
       return MiniDetailBottomSheet(
         movie: movie,
-        onAddCallback: onAddCallback,
         onPlayCallback: onPlayCallback,
         onDetailCallback: onDetailCallback,
       );

@@ -1,6 +1,8 @@
 import 'package:alia_movie/bloc/bloc.dart';
+import 'package:alia_movie/ui/detail/detail_screen.dart';
 import 'package:alia_movie/utils/assets/font_utils.dart';
 import 'package:alia_movie/utils/assets/image_utils.dart';
+import 'package:alia_movie/widgets/snackbar.dart';
 import 'package:alia_movie/widgets/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -104,32 +106,39 @@ class __HomeContainerState extends State<_HomeContainer> {
                       return Container();
                     }),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      BlocBuilder<GetMovieHeaderBloc, GetMovieHeaderState>(
-                        builder: (context, state) {
-                          if (state is GetMovieHeaderSuccessState) {
-                            return IconTextColumn(
+                  BlocBuilder<GetMovieHeaderBloc, GetMovieHeaderState>(
+                    builder: (context, state) {
+                      if (state is GetMovieHeaderSuccessState) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            IconTextColumn(
+                              icon: Icon(Icons.play_arrow_outlined,
+                                  color: Colors.white),
+                              label: 'Play',
+                              onPress: () {
+                                showSnackBar(context,
+                                    message: 'Please Subscribe to AliaMovie');
+                              },
+                            ),
+                            IconTextColumn(
                               icon: Icon(Icons.info_outlined,
                                   color: Colors.white),
-                              label: 'Info',
+                              label: 'Detail',
                               onPress: () {
-                                showInfoBottomSheet(
+                                Navigator.pushNamed(
                                   context,
-                                  movie: state.movie,
-                                  onAddCallback: () {},
-                                  onPlayCallback: () {},
-                                  onDetailCallback: () {},
+                                  DetailScreen.ROUTE,
+                                  arguments: state.movie,
                                 );
                               },
-                            );
-                          }
-                          return Container();
-                        },
-                      ),
-                    ],
-                  )
+                            )
+                          ],
+                        );
+                      }
+                      return Container();
+                    },
+                  ),
                 ],
               )
             ],
@@ -155,7 +164,7 @@ class __HomeContainerState extends State<_HomeContainer> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 6),
+                    margin: EdgeInsets.only(top: 6, bottom: 10),
                     height: 130,
                     child: ListView.builder(
                       controller: _movieScrollController,
@@ -179,9 +188,18 @@ class __HomeContainerState extends State<_HomeContainer> {
                                 movie: movies[position],
                                 isFirst: isFirst,
                                 isLast: isLast,
-                                onAddCallback: () {},
-                                onPlayCallback: () {},
-                                onDetailCallback: () {},
+                                onPlayCallback: () {
+                                  Navigator.pop(context);
+                                  showSnackBar(context,
+                                      message: 'Please Subscribe to AliaMovie');
+                                },
+                                onDetailCallback: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    DetailScreen.ROUTE,
+                                    arguments: movies[position],
+                                  );
+                                },
                               );
                       },
                     ),
@@ -230,8 +248,4 @@ class _HomeHeader extends StatelessWidget {
       ),
     );
   }
-}
-
-void showSnackBar(BuildContext context, {required String message}) {
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
 }
