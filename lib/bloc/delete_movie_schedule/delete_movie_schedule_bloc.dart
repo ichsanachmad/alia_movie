@@ -13,11 +13,11 @@ class DeleteMovieScheduleBloc
   Stream<DeleteMovieScheduleState> mapEventToState(
       DeleteMovieScheduleEvent event) async* {
     if (event is DeleteMovieScheduleEvent) {
-      yield* _mapMovieHeaderToState(event.movieScheduleData);
+      yield* _mapDeleteMovieScheduleToState(event.movieScheduleData);
     }
   }
 
-  Stream<DeleteMovieScheduleState> _mapMovieHeaderToState(
+  Stream<DeleteMovieScheduleState> _mapDeleteMovieScheduleToState(
       MovieScheduleCompanion movieScheduleData) async* {
     try {
       await _movieDomain.deleteMovieSchedule(movieScheduleData);

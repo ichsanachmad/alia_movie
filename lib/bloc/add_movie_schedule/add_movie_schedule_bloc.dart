@@ -13,11 +13,11 @@ class AddMovieScheduleBloc
   Stream<AddMovieScheduleState> mapEventToState(
       AddMovieScheduleEvent event) async* {
     if (event is AddMovieScheduleEvent) {
-      yield* _mapMovieHeaderToState(event.movieScheduleData);
+      yield* _mapAddMovieScheduleToState(event.movieScheduleData);
     }
   }
 
-  Stream<AddMovieScheduleState> _mapMovieHeaderToState(
+  Stream<AddMovieScheduleState> _mapAddMovieScheduleToState(
       MovieScheduleCompanion movieScheduleData) async* {
     try {
       await _movieDomain.addMovieSchedule(movieScheduleData);
