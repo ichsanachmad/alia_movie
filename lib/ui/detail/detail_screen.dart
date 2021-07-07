@@ -186,6 +186,7 @@ class _DetailContainerState extends State<_DetailContainer> {
                         }
                         return null;
                       },
+                      keyboardType: TextInputType.text,
                     )
                   ],
                 ),
