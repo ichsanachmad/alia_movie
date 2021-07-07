@@ -19,6 +19,21 @@ class LocalRepository extends _$LocalRepository {
   Stream<List<MovieScheduleData>> getMovieScheduleStream() =>
       select(movieSchedule).watch();
 
+  Future<bool> isMovieScheduleAdded(int id) async {
+    List<MovieScheduleData> res =
+        await (select(movieSchedule)..where((tbl) => tbl.id.equals(id))).get();
+
+    if (res.length > 0) return true;
+    return false;
+  }
+
+  Future<List<MovieScheduleData>> movieScheduleById(int id) async {
+    List<MovieScheduleData> res =
+        await (select(movieSchedule)..where((tbl) => tbl.id.equals(id))).get();
+
+    return res;
+  }
+
   Future insertMovieSchedule(MovieScheduleCompanion movieScheduleData) =>
       into(movieSchedule).insert(movieScheduleData);
 
