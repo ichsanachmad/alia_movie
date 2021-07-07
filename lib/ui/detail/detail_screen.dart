@@ -419,12 +419,10 @@ class _DetailHeader extends StatelessWidget {
             end: Alignment.bottomCenter,
           ).createShader(bounds);
         },
-        child: url != null
-            ? Image.network(
-                ImageUtils.IMAGE_500 + url!,
+        child: Image.network(
+                ImageUtils.IMAGE_500 + (url ?? ImageUtils.MOVIE_TEMP_URL),
                 fit: BoxFit.cover,
-              )
-            : Image.asset(ImageUtils.MOVIE_TEMP),
+              ),
       ),
     );
   }

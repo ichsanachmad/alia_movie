@@ -225,23 +225,21 @@ class _HomeHeader extends StatelessWidget {
         builder: (context, state) {
           if (state is GetMovieHeaderSuccessState) {
             return ShaderMask(
-              shaderCallback: (Rect bounds) {
-                return LinearGradient(
-                  colors: [
-                    Colors.white,
-                    Colors.transparent,
-                  ],
-                  begin: Alignment.center,
-                  end: Alignment.bottomCenter,
-                ).createShader(bounds);
-              },
-              child: state.movie.imagePath != null
-                  ? Image.network(
-                      ImageUtils.IMAGE_500 + state.movie.imagePath!,
-                      fit: BoxFit.cover,
-                    )
-                  : Image.asset(ImageUtils.MOVIE_TEMP),
-            );
+                shaderCallback: (Rect bounds) {
+                  return LinearGradient(
+                    colors: [
+                      Colors.white,
+                      Colors.transparent,
+                    ],
+                    begin: Alignment.center,
+                    end: Alignment.bottomCenter,
+                  ).createShader(bounds);
+                },
+                child: Image.network(
+                  ImageUtils.IMAGE_500 +
+                      (state.movie.imagePath ?? ImageUtils.MOVIE_TEMP_URL),
+                  fit: BoxFit.cover,
+                ));
           }
           return Container();
         },
