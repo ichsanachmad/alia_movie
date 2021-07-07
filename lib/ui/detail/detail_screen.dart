@@ -19,11 +19,13 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
   GlobalKey<FormState> _formKey = GlobalKey();
-  TextEditingController _feedbackController = TextEditingController();
+  TextEditingController _scheduleDateController = TextEditingController();
+  TextEditingController _scheduleNoteController = TextEditingController();
 
   @override
   void dispose() {
-    _feedbackController.dispose();
+    _scheduleDateController.dispose();
+    _scheduleNoteController.dispose();
     super.dispose();
   }
 
@@ -87,7 +89,7 @@ class _DetailScreenState extends State<DetailScreen> {
             Container(
               margin: EdgeInsets.only(left: 16, top: 32),
               child: Text(
-                'Feedback',
+                'Schedule to Watch Movie',
                 style: TextStyle(
                   fontFamily: FontUtils.POPPINS,
                   color: Colors.white,
@@ -100,45 +102,76 @@ class _DetailScreenState extends State<DetailScreen> {
               key: _formKey,
               child: Container(
                 margin: EdgeInsets.only(left: 16, right: 16, top: 8),
-                child: TextFormField(
-                  controller: _feedbackController,
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: _scheduleDateController,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        hintText: 'Schedule Date',
+                        hintStyle: TextStyle(
+                          fontFamily: FontUtils.POPPINS,
+                          color: Colors.white,
+                          fontSize: 14,
+                        ),
+                      ),
+                      style: TextStyle(
+                        fontFamily: FontUtils.POPPINS,
+                        color: Colors.white,
+                        fontSize: 14,
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Fill schedule date field';
+                        }
+                        return null;
+                      },
                     ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                    ),
-                    hintText: 'Give Feedback...',
-                    hintStyle: TextStyle(
-                      fontFamily: FontUtils.POPPINS,
-                      color: Colors.white,
-                      fontSize: 14,
-                    ),
-                  ),
-                  style: TextStyle(
-                    fontFamily: FontUtils.POPPINS,
-                    color: Colors.white,
-                    fontSize: 14,
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Fill feedback field';
-                    }
-                    return null;
-                  },
+                    SizedBox(height: 16),
+                    TextFormField(
+                      controller: _scheduleNoteController,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        hintText: 'Note Schedule',
+                        hintStyle: TextStyle(
+                          fontFamily: FontUtils.POPPINS,
+                          color: Colors.white,
+                          fontSize: 14,
+                        ),
+                      ),
+                      style: TextStyle(
+                        fontFamily: FontUtils.POPPINS,
+                        color: Colors.white,
+                        fontSize: 14,
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Fill schedule note field';
+                        }
+                        return null;
+                      },
+                    )
+                  ],
                 ),
               ),
             ),
             Container(
               margin: EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
               child: IconedCircularButton(
-                icon: Icon(Icons.play_arrow),
-                label: 'Send Feedback',
+                icon: Icon(Icons.save),
+                label: 'Save Schedule',
                 onPressed: () {
-                  if (_formKey.currentState!.validate())
-                    showFeedbackBottomSheet(context,
-                        feedback: _feedbackController.text.toString());
+                  if (_formKey.currentState!.validate()) {}
                 },
               ),
             ),
@@ -180,74 +213,4 @@ class _DetailHeader extends StatelessWidget {
       ),
     );
   }
-}
-
-void showFeedbackBottomSheet(BuildContext context, {required String feedback}) {
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    backgroundColor: Colors.transparent,
-    builder: (context) {
-      return Container(
-        height: MediaQuery.of(context).size.height * 0.4,
-        decoration: BoxDecoration(
-          color: ColorHex(ColorUtils.GREY),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(14),
-            topRight: Radius.circular(14),
-          ),
-        ),
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment.topRight,
-              child: Container(
-                margin: EdgeInsets.only(right: 8, top: 4),
-                child: InkWell(
-                  child: Icon(
-                    Icons.close_rounded,
-                    color: Colors.white,
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(left: 8, top: 20),
-                  child: Text(
-                    'Your Feedback',
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontFamily: FontUtils.POPPINS,
-                      color: Colors.white,
-                      fontSize: 23,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 8, top: 8),
-                  child: Text(
-                    feedback,
-                    maxLines: 4,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontFamily: FontUtils.POPPINS,
-                      color: Colors.white,
-                      fontSize: 12,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ],
-        ),
-      );
-    },
-  );
 }
