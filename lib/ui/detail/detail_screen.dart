@@ -169,7 +169,17 @@ class _DetailContainerState extends State<_DetailContainer> {
                             ),
                           ),
                         ],
-                      )
+                      ),
+                      SafeArea(
+                        child: IconButton(
+                            icon: Icon(
+                              Icons.arrow_back,
+                              color: Colors.white,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            }),
+                      ),
                     ],
                   ),
                   Container(
