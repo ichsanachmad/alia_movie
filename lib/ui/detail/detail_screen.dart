@@ -1,23 +1,32 @@
 import 'package:alia_movie/data/model/model.dart';
 import 'package:alia_movie/utils/assets/font_utils.dart';
 import 'package:alia_movie/utils/assets/image_utils.dart';
-import 'package:alia_movie/utils/colors/color_hex.dart';
-import 'package:alia_movie/utils/colors/color_utils.dart';
 import 'package:alia_movie/utils/date/custom_date.dart';
 import 'package:alia_movie/widgets/widget.dart';
 import 'package:flutter/material.dart';
 
-class DetailScreen extends StatefulWidget {
+class DetailScreen extends StatelessWidget {
   static const ROUTE = '/detail';
   final Movie? movie;
 
   DetailScreen({this.movie});
 
   @override
-  _DetailScreenState createState() => _DetailScreenState();
+  Widget build(BuildContext context) {
+    return _DetailContainer(movie: movie);
+  }
 }
 
-class _DetailScreenState extends State<DetailScreen> {
+class _DetailContainer extends StatefulWidget {
+  final Movie? movie;
+
+  _DetailContainer({this.movie});
+
+  @override
+  _DetailContainerState createState() => _DetailContainerState();
+}
+
+class _DetailContainerState extends State<_DetailContainer> {
   GlobalKey<FormState> _formKey = GlobalKey();
   TextEditingController _scheduleDateController = TextEditingController();
   TextEditingController _scheduleNoteController = TextEditingController();
