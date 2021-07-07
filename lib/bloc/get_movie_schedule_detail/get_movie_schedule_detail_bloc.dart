@@ -23,7 +23,8 @@ class GetMovieScheduleDetailBloc
       var res = await _movieDomain.getMovieScheduleDetail(id);
       yield GetMovieScheduleDetailSuccessState(movies: res);
     } catch (e) {
-      yield GetMovieScheduleDetailErrorState(message: e.toString());
+      yield GetMovieScheduleDetailErrorState(
+          message: 'Failed Load Detail Schedule');
     }
   }
 }

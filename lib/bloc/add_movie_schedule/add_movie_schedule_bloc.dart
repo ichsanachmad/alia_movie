@@ -21,9 +21,9 @@ class AddMovieScheduleBloc
       MovieScheduleCompanion movieScheduleData) async* {
     try {
       await _movieDomain.addMovieSchedule(movieScheduleData);
-      yield AddMovieScheduleSuccessState(message: 'Success');
+      yield AddMovieScheduleSuccessState(message: 'Success Add Schedule');
     } catch (e) {
-      yield AddMovieScheduleErrorState(message: e.toString());
+      yield AddMovieScheduleErrorState(message: 'Failed Add Schedule');
     }
   }
 }

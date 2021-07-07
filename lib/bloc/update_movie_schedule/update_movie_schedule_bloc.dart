@@ -21,9 +21,9 @@ class UpdateMovieScheduleBloc
       MovieScheduleCompanion movieScheduleData) async* {
     try {
       await _movieDomain.updateMovieSchedule(movieScheduleData);
-      yield UpdateMovieScheduleSuccessState(message: 'Success');
+      yield UpdateMovieScheduleSuccessState(message: 'Success Update Schedule');
     } catch (e) {
-      yield UpdateMovieScheduleErrorState(message: e.toString());
+      yield UpdateMovieScheduleErrorState(message: 'Failed Update Schedule');
     }
   }
 }

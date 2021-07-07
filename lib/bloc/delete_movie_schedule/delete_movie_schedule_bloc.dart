@@ -21,9 +21,9 @@ class DeleteMovieScheduleBloc
       MovieScheduleCompanion movieScheduleData) async* {
     try {
       await _movieDomain.deleteMovieSchedule(movieScheduleData);
-      yield DeleteMovieScheduleSuccessState(message: 'Success');
+      yield DeleteMovieScheduleSuccessState(message: 'Success Delete Schedule');
     } catch (e) {
-      yield DeleteMovieScheduleErrorState(message: e.toString());
+      yield DeleteMovieScheduleErrorState(message: 'Failed Delete Schedule');
     }
   }
 }
