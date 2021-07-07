@@ -1,20 +1,34 @@
+import 'package:alia_movie/bloc/bloc.dart';
 import 'package:alia_movie/data/model/model.dart';
 import 'package:alia_movie/utils/assets/font_utils.dart';
 import 'package:alia_movie/utils/assets/image_utils.dart';
 import 'package:alia_movie/utils/date/custom_date.dart';
 import 'package:alia_movie/widgets/widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class DetailScreen extends StatelessWidget {
   static const ROUTE = '/detail';
-  final Movie? movie;
+  final Movie movie;
 
-  DetailScreen({this.movie});
+  DetailScreen({required this.movie});
 
   @override
   Widget build(BuildContext context) {
-    return _DetailContainer(movie: movie);
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AddMovieScheduleBloc>(
+            create: (context) => AddMovieScheduleBloc()),
+        BlocProvider<UpdateMovieScheduleBloc>(
+            create: (context) => UpdateMovieScheduleBloc()),
+        BlocProvider<DeleteMovieScheduleBloc>(
+            create: (context) => DeleteMovieScheduleBloc()),
+        BlocProvider<GetMovieScheduleDetailBloc>(
+            create: (context) => GetMovieScheduleDetailBloc()),
+      ],
+      child: _DetailContainer(movie: movie),
+    );
   }
 }
 
