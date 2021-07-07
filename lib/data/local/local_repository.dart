@@ -27,7 +27,7 @@ class LocalRepository extends _$LocalRepository {
     return false;
   }
 
-  Future<List<MovieScheduleData>> movieScheduleById(int id) async {
+  Future<List<MovieScheduleData>> getMovieScheduleById(int id) async {
     List<MovieScheduleData> res =
         await (select(movieSchedule)..where((tbl) => tbl.id.equals(id))).get();
 

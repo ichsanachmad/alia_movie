@@ -21,7 +21,7 @@ class MovieDomain {
     await _localRepository.insertMovieSchedule(movieScheduleData);
   }
 
-  // Is Moview Schdule Exist
+  // Is Movie Schdule Exist
   Future<bool> isMovieScheduleAdded(int id) async {
     return await _localRepository.isMovieScheduleAdded(id);
   }
@@ -29,6 +29,11 @@ class MovieDomain {
   // Read My Schedule Movie
   Stream<List<MovieScheduleData>> watchMovieSchedule() {
     return _localRepository.getMovieScheduleStream();
+  }
+
+  // Get Movie Detail
+  Future<List<MovieScheduleData>> getMovieScheduleDetail(int id) {
+    return _localRepository.getMovieScheduleById(id);
   }
 
   // Delete My Schedule Movie
