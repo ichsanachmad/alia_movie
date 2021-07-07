@@ -16,11 +16,30 @@ class MovieDomain {
   }
 
   // Add My Schedule Movie
-  Future<void> addMySchedule(MovieScheduleCompanion movieScheduleData) async {
+  Future<void> addMovieSchedule(
+      MovieScheduleCompanion movieScheduleData) async {
     await _localRepository.insertMovieSchedule(movieScheduleData);
   }
-  
+
+  // Is Moview Schdule Exist
+  Future<bool> isMovieScheduleAdded(int id) async {
+    return await _localRepository.isMovieScheduleAdded(id);
+  }
+
   // Read My Schedule Movie
+  Stream<List<MovieScheduleData>> watchMovieSchedule() {
+    return _localRepository.getMovieScheduleStream();
+  }
+
   // Delete My Schedule Movie
+  Future<void> deleteMovieSchedule(
+      MovieScheduleCompanion movieScheduleData) async {
+    await _localRepository.deleteMovieSchedule(movieScheduleData);
+  }
+
   // Update My Schedule Movie
+  Future<void> updateMovieSchedule(
+      MovieScheduleCompanion movieScheduleData) async {
+    await _localRepository.updateMovieSchedule(movieScheduleData);
+  }
 }
