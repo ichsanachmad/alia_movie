@@ -1,6 +1,5 @@
 import 'package:alia_movie/bloc/get_movie_schedule_detail/get_movie_schedule_detail_event.dart';
 import 'package:alia_movie/bloc/get_movie_schedule_detail/get_movie_schedule_detail_state.dart';
-import 'package:alia_movie/data/local/local_repository.dart';
 import 'package:alia_movie/domain/movie_domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
