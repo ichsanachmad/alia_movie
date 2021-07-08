@@ -1,4 +1,6 @@
 import 'package:alia_movie/bloc/bloc.dart';
+import 'package:alia_movie/data/local/local_repository.dart';
+import 'package:alia_movie/data/model/model.dart';
 import 'package:alia_movie/ui/detail/detail_screen.dart';
 import 'package:alia_movie/utils/assets/font_utils.dart';
 import 'package:alia_movie/utils/assets/image_utils.dart';
@@ -12,33 +14,23 @@ import 'component.dart';
 class HomeScreen extends StatelessWidget {
   static const ROUTE = '/home';
 
-  final GetMovieHighlightListBloc getMovieHiglightBloc =
-      GetMovieHighlightListBloc();
-  final GetMovieHeaderBloc getMovieHeader = GetMovieHeaderBloc();
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<GetMovieHighlightListBloc>(
-            create: (context) => getMovieHiglightBloc),
-        BlocProvider<GetMovieHeaderBloc>(create: (context) => getMovieHeader),
+            create: (context) => GetMovieHighlightListBloc()),
+        BlocProvider<GetMovieHeaderBloc>(
+            create: (context) => GetMovieHeaderBloc()),
+        BlocProvider<GetMovieScheduleStreamBloc>(
+            create: (context) => GetMovieScheduleStreamBloc()),
       ],
-      child: _HomeContainer(
-        getMovieHiglightBloc: getMovieHiglightBloc,
-        getMovieHeader: getMovieHeader,
-      ),
+      child: _HomeContainer(),
     );
   }
 }
 
 class _HomeContainer extends StatefulWidget {
-  final GetMovieHighlightListBloc getMovieHiglightBloc;
-  final GetMovieHeaderBloc getMovieHeader;
-
-  _HomeContainer(
-      {required this.getMovieHiglightBloc, required this.getMovieHeader});
-
   @override
   __HomeContainerState createState() => __HomeContainerState();
 }
@@ -51,15 +43,20 @@ class __HomeContainerState extends State<_HomeContainer> {
     double currentScroll = _movieScrollController.position.pixels;
 
     if (currentScroll == maxScroll) {
-      widget.getMovieHiglightBloc.add(GetMovieHighlightListEvent());
+      context
+          .read<GetMovieHighlightListBloc>()
+          .add(GetMovieHighlightListEvent());
     }
   }
 
   @override
   void initState() {
     _movieScrollController.addListener(_onScroll);
-    widget.getMovieHiglightBloc.add(GetMovieHighlightListEvent());
-    widget.getMovieHeader.add(GetMovieHeaderEvent());
+    context.read<GetMovieHighlightListBloc>().add(GetMovieHighlightListEvent());
+    context.read<GetMovieHeaderBloc>().add(GetMovieHeaderEvent());
+    context
+        .read<GetMovieScheduleStreamBloc>()
+        .add(OnGetMovieScheduleStreamEvent());
     super.initState();
   }
 
@@ -206,6 +203,82 @@ class __HomeContainerState extends State<_HomeContainer> {
                   ),
                 ],
               );
+            }
+            return Container();
+          }),
+          Container(
+            margin: EdgeInsets.only(left: 16, top: 24),
+            child: Text(
+              'Your Movie Schedule',
+              style: TextStyle(
+                fontFamily: FontUtils.POPPINS,
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+          BlocBuilder<GetMovieScheduleStreamBloc, GetMovieScheduleStreamState>(
+              builder: (context, state) {
+            if (state is GetMovieScheduleStreamSuccessState) {
+              final movies = state.movies;
+              if (movies.length > 0) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: 6, bottom: 10),
+                      height: 130,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: movies.length,
+                        itemBuilder: (context, position) {
+                          bool isFirst = position == 0;
+                          bool isLast = position == movies.length - 1;
+                          MovieScheduleData movieScheduleData =
+                              movies[position];
+                          Movie movie = Movie(
+                              id: movieScheduleData.id,
+                              title: movieScheduleData.title,
+                              releaseDate: movieScheduleData.releaseDate,
+                              imagePath: movieScheduleData.imagePath,
+                              overview: movieScheduleData.overview);
+                          return MovieHomeListItem(
+                            movie: movie,
+                            isFirst: isFirst,
+                            isLast: isLast,
+                            onPlayCallback: () {
+                              Navigator.pop(context);
+                              showSnackBar(context,
+                                  message: 'Please Subscribe to AliaMovie');
+                            },
+                            onDetailCallback: () {
+                              Navigator.pushNamed(
+                                context,
+                                DetailScreen.ROUTE,
+                                arguments: movie,
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                );
+              } else {
+                return Container(
+                  margin: EdgeInsets.only(left: 16, top: 8, bottom: 8),
+                  child: Text(
+                    'Please Put Some Schedule From Movie Detail!',
+                    style: TextStyle(
+                      fontFamily: FontUtils.POPPINS,
+                      color: Colors.white,
+                      fontSize: 14,
+                    ),
+                  ),
+                );
+              }
             }
             return Container();
           }),
