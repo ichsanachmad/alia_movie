@@ -11,8 +11,7 @@ Alia Movie is Take home test project from ChatAlia.
 -  Create an app that able to Create, Read, Update, and Delete movie data locally
 
 -  You can use any fields listed in this API results [Movie Db](
-https://api.themoviedb.org/3/search/movie?api_key=xxxx
-b5&query=money&page=1)
+https://api.themoviedb.org/3/search/movie?api_key=xxxxb5&query=money&page=1)
 
 -  [Poster (size: w92, w185, w500)](
 http://image.tmdb.org/t/p/w92/5xNBYXuv8wqiLVDhsfqCOr75DL7.jpg)
