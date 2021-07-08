@@ -191,6 +191,7 @@ class __HomeContainerState extends State<_HomeContainer> {
                                       message: 'Please Subscribe to AliaMovie');
                                 },
                                 onDetailCallback: () {
+                                  Navigator.pop(context);
                                   Navigator.pushNamed(
                                     context,
                                     DetailScreen.ROUTE,
@@ -254,6 +255,7 @@ class __HomeContainerState extends State<_HomeContainer> {
                                   message: 'Please Subscribe to AliaMovie');
                             },
                             onDetailCallback: () {
+                              Navigator.pop(context);
                               Navigator.pushNamed(
                                 context,
                                 DetailScreen.ROUTE,
