@@ -5,11 +5,13 @@ class IconedCircularButton extends StatelessWidget {
   final Icon icon;
   final VoidCallback onPressed;
   final String label;
+  final Color? color;
 
   IconedCircularButton({
     required this.icon,
     required this.onPressed,
     required this.label,
+    this.color,
   });
 
   @override
@@ -25,6 +27,7 @@ class IconedCircularButton extends StatelessWidget {
         ),
       ),
       style: ElevatedButton.styleFrom(
+        primary: color ?? Theme.of(context).primaryColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(23),
         ),

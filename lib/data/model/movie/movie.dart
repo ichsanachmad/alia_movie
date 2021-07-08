@@ -17,6 +17,7 @@ class Movie {
 
   Movie({
     required this.id,
+    required this.title,
     this.imagePath,
     this.releaseDate,
     this.overview,

@@ -29,14 +29,12 @@ class MovieHomeListItem extends StatelessWidget {
       width: 100,
       child: InkWell(
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: movie.imagePath != null
-              ? Image.network(
-                  ImageUtils.IMAGE_185 + movie.imagePath!,
-                  fit: BoxFit.cover,
-                )
-              : Image.asset(ImageUtils.MOVIE_TEMP),
-        ),
+            borderRadius: BorderRadius.circular(8),
+            child: Image.network(
+              ImageUtils.IMAGE_185 +
+                  (movie.imagePath ?? ImageUtils.MOVIE_TEMP_URL),
+              fit: BoxFit.cover,
+            )),
         onTap: () {
           showInfoBottomSheet(
             context,
@@ -100,12 +98,11 @@ class MiniDetailBottomSheet extends StatelessWidget {
                     margin: EdgeInsets.only(left: 16, top: 20),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
-                      child: movie.imagePath != null
-                          ? Image.network(
-                              ImageUtils.IMAGE_185 + movie.imagePath!,
-                              fit: BoxFit.cover,
-                            )
-                          : Image.asset(ImageUtils.MOVIE_TEMP),
+                      child: Image.network(
+                        ImageUtils.IMAGE_185 +
+                            (movie.imagePath ?? ImageUtils.MOVIE_TEMP_URL),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                   Expanded(

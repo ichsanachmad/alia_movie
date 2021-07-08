@@ -15,7 +15,7 @@ class AppNavigator {
         _builder = (context) => SplashScreen();
         break;
       case DetailScreen.ROUTE:
-        Movie? movie = settings.arguments as Movie?;
+        Movie movie = settings.arguments as Movie;
         _builder = (context) => DetailScreen(movie: movie);
         break;
       default:
